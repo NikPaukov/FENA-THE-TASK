@@ -36,7 +36,4 @@ services:
         value: ""
     healthCheckPath: "/"
   - name: redis
-    type: web
-    image: redis:latest
-    startCommand: redis-server --save 20 1 --loglevel warning
-    port: 6379
+    type: redis
