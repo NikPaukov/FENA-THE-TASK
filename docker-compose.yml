@@ -1,0 +1,42 @@
+services:
+  backend:
+    build:
+      context: src/backend/.
+      dockerfile: Dockerfile
+    container_name: fena-backend
+    depends_on:
+      - redis
+    ports:
+      - '3000:3000'
+    environment:
+      - FRONTEND_URL=${FRONTEND_URL}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+    volumes:
+      - ./src:/home/node/src
+  frontend:
+    build:
+      context: src/frontend/.
+      dockerfile: Dockerfile
+    container_name: fena-frontend
+    environment:
+      - PORT=${PORT}
+      - REACT_APP_BACKEND_HOST=${REACT_APP_BACKEND_HOST}
+      - REACT_APP_BACKEND_PORT=${REACT_APP_BACKEND_PORT}
+      - REACT_APP_BACKEND_PREFIX=${REACT_APP_BACKEND_PREFIX}
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./src:/app/src
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - redis:/data
+volumes:
+  redis:
+    driver: local
