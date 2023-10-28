@@ -1,0 +1,49 @@
+services:
+  - name: backend
+    type: web
+    buildCommand: docker build -t fena-backend -f src/backend/Dockerfile .
+    startCommand: npm start
+    envVars:
+      - key: FRONTEND_URL
+        from: secret
+        secretName: frontend-url-secret
+      - key: SESSION_SECRET
+        from: secret
+        secretName: session-secret
+      - key: REDIS_HOST
+        from: secret
+        secretName: redis-host-secret
+      - key: REDIS_PORT
+        from: secret
+        secretName: redis-port-secret
+    healthCheckPath: "/"
+  - name: frontend
+    type: web
+    buildCommand: docker build -t fena-frontend -f src/frontend/Dockerfile .
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: REACT_APP_BACKEND_HOST
+        from: web
+        name: backend
+        port: 3000
+      - key: REACT_APP_BACKEND_PORT
+        from: web
+        name: backend
+        port: 3000
+      - key: REACT_APP_BACKEND_PREFIX
+        value: ""
+    healthCheckPath: "/"
+  - name: redis
+    type: web
+    image: redis:6.2-alpine
+    startCommand: redis-server --save 20 1 --loglevel warning
+    ports:
+      - 6379
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:
+    driver: local
