@@ -28,4 +28,7 @@ services:
         value: "/api"
     healthCheckPath: "/"
   - name: redis
+    ipAllowList: # required
+      - source: 0.0.0.0/0
+        description: everywhere
     type: redis
