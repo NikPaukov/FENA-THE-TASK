@@ -3,7 +3,6 @@ services:
     type: web
     runtime: docker
     buildCommand: docker build -t fena-backend -f src/backend/Dockerfile .
-    startCommand: npm start
     envVars:
       - key: FRONTEND_URL
         value: http://localhost:3001
@@ -18,7 +17,6 @@ services:
     type: web
     runtime: docker
     buildCommand: docker build -t fena-frontend -f src/frontend/Dockerfile .
-    startCommand: npm start
     envVars:
       - key: PORT
         value: 3001
