@@ -5,17 +5,13 @@ services:
     startCommand: npm start
     envVars:
       - key: FRONTEND_URL
-        from: secret
-        secretName: frontend-url-secret
+        value: http://localhost:3001
       - key: SESSION_SECRET
-        from: secret
-        secretName: session-secret
+        value: secret
       - key: REDIS_HOST
-        from: secret
-        secretName: redis-host-secret
+        value: localhost
       - key: REDIS_PORT
-        from: secret
-        secretName: redis-port-secret
+        value: 6379
     healthCheckPath: "/"
   - name: frontend
     type: web
@@ -25,15 +21,11 @@ services:
       - key: PORT
         value: 3001
       - key: REACT_APP_BACKEND_HOST
-        from: web
-        name: backend
-        port: 3000
+        value: localhost
       - key: REACT_APP_BACKEND_PORT
-        from: web
-        name: backend
-        port: 3000
+        value: 3000
       - key: REACT_APP_BACKEND_PREFIX
-        value: ""
+        value: "/api"
     healthCheckPath: "/"
   - name: redis
     type: redis
