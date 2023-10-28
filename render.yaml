@@ -37,13 +37,6 @@ services:
     healthCheckPath: "/"
   - name: redis
     type: web
-    image: redis:6.2-alpine
+    image: redis:latest
     startCommand: redis-server --save 20 1 --loglevel warning
-    ports:
-      - 6379
-    volumes:
-      - redis:/data
-
-volumes:
-  redis:
-    driver: local
+    port: 6379
