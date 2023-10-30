@@ -15,20 +15,20 @@ services:
       - REDIS_PORT=${REDIS_PORT}
     volumes:
       - ./src:/home/node/src
-  frontend:
-    build:
-      context: src/frontend/.
-      dockerfile: Dockerfile
-    container_name: fena-frontend
-    environment:
-      - PORT=${PORT}
-      - REACT_APP_BACKEND_HOST=${REACT_APP_BACKEND_HOST}
-      - REACT_APP_BACKEND_PORT=${REACT_APP_BACKEND_PORT}
-      - REACT_APP_BACKEND_PREFIX=${REACT_APP_BACKEND_PREFIX}
-    ports:
-      - '3001:3001'
-    volumes:
-      - ./src:/app/src
+#  frontend:
+#    build:
+#      context: src/frontend/.
+#      dockerfile: Dockerfile
+#    container_name: fena-frontend
+#    environment:
+#      - PORT=${PORT}
+#      - REACT_APP_BACKEND_HOST=${REACT_APP_BACKEND_HOST}
+#      - REACT_APP_BACKEND_PORT=${REACT_APP_BACKEND_PORT}
+#      - REACT_APP_BACKEND_PREFIX=${REACT_APP_BACKEND_PREFIX}
+#    ports:
+#      - '3001:3001'
+#    volumes:
+#      - ./src:/app/src
   redis:
     image: redis:6.2-alpine
     restart: always

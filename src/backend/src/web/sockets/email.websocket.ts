@@ -25,7 +25,6 @@ export class EmailWebsocket implements OnGatewayConnection, OnGatewayDisconnect,
    }
 
     sendMessage(sessionId: string, body: EmailWebsocketResponseDto, event: string) {
-        this.logger.log("Sending message through websocket")
         const clients = this.server.sockets.adapter.rooms.get(sessionId);
         if(clients && clients.size)
         this.server.to(sessionId).emit(event, body)
