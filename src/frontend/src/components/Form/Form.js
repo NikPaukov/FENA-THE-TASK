@@ -12,7 +12,7 @@ function Form() {
         sendRequest({
         url: 'email/lastJob',
         method: 'get'
-    }).then(response => setSentEmails(response.data))
+    }).then(response => setSentEmails(response.data | 0))
 
         socket.then(socket => {
             socket.on("emailReport", (data) => {

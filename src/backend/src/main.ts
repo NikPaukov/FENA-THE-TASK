@@ -16,7 +16,7 @@ async function bootstrap() {
     }))
 
     app.setGlobalPrefix("/api")
-
-    await app.listen(3000);
+    console.log('PORT:' + process.env.BACKEND_PORT)
+    await app.listen(+process.env.BACKEND_PORT);
  }
 bootstrap();
