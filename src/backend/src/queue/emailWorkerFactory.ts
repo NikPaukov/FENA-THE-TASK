@@ -1,7 +1,7 @@
 import {EmailWebsocket} from "../web/sockets/email.websocket";
 import {Job, Worker} from "bullmq";
 import * as queueConfig from "./email.queue.config";
-import {Logger} from "@nestjs/common";
+import * as process from "process";
 
 export const emailWorkerFactory = (gateway: EmailWebsocket) => {
     return new Worker(queueConfig.queueName,
@@ -20,10 +20,10 @@ export const emailWorkerFactory = (gateway: EmailWebsocket) => {
             }
             return numberOfEmails;
         },
-        {connection: queueConfig.connection, concurrency: 10}
+        {connection: queueConfig.connection, concurrency: +process.env.WORKER_CONCURRENCY}
     )
 }
 const sendEmail = async () => {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise(resolve => setTimeout(resolve, +process.env.EMAIL_TIME_TO_SEND));
 
 }

@@ -6,4 +6,5 @@ export const connection = {
 }
 
 export const queueName = 'email-queue'
+export const workerConcurrency = +process.env.WORKER_CONCURRENCY;
 
